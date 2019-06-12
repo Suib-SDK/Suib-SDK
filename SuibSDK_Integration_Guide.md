@@ -73,7 +73,7 @@
 	<provider
             android:authorities="${applicationId}.xxprovider"
             android:name="com.suib.base.core.SuibProvider"
-            android:exported="true"/>
+            android:exported="false"/>
 	
 
 	<!--If your targetSdkVersion is 28, you need update <application> as follows:-->
