@@ -39,7 +39,7 @@
 
 ## <a name="integration">Integration Suib SDK</a>  
 
-### <a name="step1">2.1 Integrating the Suib SDK in to project</a>
+### <a name="step1">3.1 Integrating the Suib SDK in to project</a>
 
 * Check SDK in the rar.
 
@@ -87,7 +87,7 @@
 
 
 
-## <a name="step2">2.2 Initialization</a>  
+## <a name="step2">3.2 Initialization</a>  
 
 > Init the SDK in your Application as detailed below: 
 
@@ -122,7 +122,7 @@
       SuibSDK.setSchema(true);
 ```
 
-## <a name="step3">2.3 Obfuscation Configuration</a> 
+## <a name="step3">3.3 Obfuscation Configuration</a> 
 > If it needs to obfuscate the codes in building the project process, you should add the following codes into the proguard file:
 
 ``` java
