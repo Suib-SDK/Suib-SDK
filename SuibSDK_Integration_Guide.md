@@ -2,15 +2,15 @@
 
 1. [Introduction](#introduction)
 
-2. [Integration Notes](#note)
+2. [Integration Suib SDK](#integration)
 
-3. [Integration Suib SDK](#integration)
+    [2.1 Integrating the Suib SDK in to project](#step1)
 
-    [3.1 Integrating the Suib SDK in to project](#step1)
+    [2.2 Initialize the Suib SDK](#step2)
 
-    [3.2 Initialize the Suib SDK](#step2)
+    [2.3 Android code obfuscation](#step3)
 
-    [3.3 Android code obfuscation](#step3)
+3. [Integration Notes](#note)
 
 4. [Request Ad](#request)
 
@@ -39,7 +39,7 @@
 
 ## <a name="integration">Integration Suib SDK</a>  
 
-### <a name="step1">3.1 Integrating the Suib SDK in to project</a>
+### <a name="step1">2.1 Integrating the Suib SDK in to project</a>
 
 * Check SDK in the rar.
 
@@ -87,7 +87,7 @@
 
 
 
-## <a name="step2">3.2 Initialization</a>  
+## <a name="step2">2.2 Initialization</a>  
 
 > Init the SDK in your Application as detailed below: 
 
@@ -122,7 +122,7 @@
       SuibSDK.setSchema(true);
 ```
 
-## <a name="step3">3.3 Obfuscation Configuration</a> 
+## <a name="step3">2.3 Obfuscation Configuration</a> 
 > If it needs to obfuscate the codes in building the project process, you should add the following codes into the proguard file:
 
 ``` java
@@ -141,7 +141,7 @@
 ```
 
 
-## <a name="note">Integration Notes</a>
+## <a name="note">3.Integration Notes</a>
 
 ​	If you live in a country, such as China, which is forbidden google play, two prerequisites to get Suib ads: 
 > * GooglePlay has installed on your device.
