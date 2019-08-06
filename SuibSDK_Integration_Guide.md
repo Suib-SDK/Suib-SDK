@@ -143,7 +143,7 @@ Developers can use this interface to indicate that your content is child-oriente
      SuibSDK.setIsChildDirected(this, true);
 ```
 Warning:
-1. It is recommended that call this interface before request ad. 
+1. It is recommended to call this interface before requesting advertisements.
 
 ## <a name="step5">2.5 Obfuscation Configuration</a> 
 ​	 If it needs to obfuscate the codes in building the project process, you should add the following codes into the proguard file:
