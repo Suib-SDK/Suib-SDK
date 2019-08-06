@@ -128,16 +128,16 @@
             }
      });
 ```
-​	warning:
-​	1、If SDK don't gather the user informatian ,you probably get no fill. 
-​	2、It is recommended that obtaining the user's consent before SDK initialization. 
-```
+- warning:
+- 1、If SDK don't gather the user informatian ,you probably get no fill. 
+- 2、It is recommended that obtaining the user's consent before SDK initialization. 
+
 
 ## <a name="step4">2.4 Child Oriented Settings</a>  
 
 
 ## <a name="step5">2.5 Obfuscation Configuration</a> 
-> If it needs to obfuscate the codes in building the project process, you should add the following codes into the proguard file:
+​	 If it needs to obfuscate the codes in building the project process, you should add the following codes into the proguard file:
 
 ``` java
     #for sdk
