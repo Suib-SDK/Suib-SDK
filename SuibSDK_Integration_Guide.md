@@ -134,6 +134,8 @@ Warning:
 
 
 ## <a name="step4">2.4 Child Oriented Settings</a>  
+In order to comply with the provisions of the Children's Online Privacy Protection Act (COPPA), we provide the setIsChildDirected interface.
+
 
 
 ## <a name="step5">2.5 Obfuscation Configuration</a> 
@@ -197,6 +199,7 @@ public class MyCTAdEventListener extends CTAdEventListener {
     }
 }
 ```
+## <a name="request">4.Request Ad</a>
 
 ## <a name="native">4.1 Native Ads Integration</a>
 
