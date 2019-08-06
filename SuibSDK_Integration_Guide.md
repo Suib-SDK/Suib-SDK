@@ -7,8 +7,12 @@
     [2.1 Integrating the Suib SDK in to project](#step1)
 
     [2.2 Initialize the Suib SDK](#step2)
+    
+    [2.3 GDPR](#step3)
+    
+    [2.4 Child Oriented Settings](#step4)
 
-    [2.3 Android code obfuscation](#step3)
+    [2.5 Android code obfuscation](#step5)
 
 3. [Integration Notes](#note)
 
@@ -97,6 +101,13 @@
     SuibSDK.initialize(context, "Your slotID");
 ```
 
+**Set schema https**
+```java
+      SuibSDK.setSchema(true);
+```
+
+## <a name="step2">2.3 GDPR</a>  
+
 **Use this interface to upload consent from affected users for GDPR**
 
 ```java
@@ -117,12 +128,11 @@
             }
      });
 ```
-**Set schema https**
-```java
-      SuibSDK.setSchema(true);
-```
 
-## <a name="step3">2.3 Obfuscation Configuration</a> 
+## <a name="step2">2.4 Child Oriented Settings</a>  
+
+
+## <a name="step3">2.5 Obfuscation Configuration</a> 
 > If it needs to obfuscate the codes in building the project process, you should add the following codes into the proguard file:
 
 ``` java
