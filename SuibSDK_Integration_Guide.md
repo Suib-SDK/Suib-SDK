@@ -103,7 +103,7 @@
 
 **Set schema https**
 ```java
-      SuibSDK.setSchema(true);
+    SuibSDK.setSchema(true);
 ```
 
 ## <a name="step3">2.3 GDPR</a>  
