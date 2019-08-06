@@ -136,7 +136,14 @@ Warning:
 ## <a name="step4">2.4 Child Oriented Settings</a>  
 In order to comply with the provisions of the Children's Online Privacy Protection Act (COPPA), we provide the setIsChildDirected interface.
 
+Developers can use this interface to indicate that your content is child-oriented. We will stop personalized advertising and put in advertisements suitable for children，which may result in no filling.
 
+``` java
+     //child-oriented
+     SuibSDK.setIsChildDirected(this, true);
+```
+Warning:
+1. It is recommended that call this interface before request ad. 
 
 ## <a name="step5">2.5 Obfuscation Configuration</a> 
 ​	 If it needs to obfuscate the codes in building the project process, you should add the following codes into the proguard file:
