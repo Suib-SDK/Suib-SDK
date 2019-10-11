@@ -3,12 +3,12 @@
 ## <a name="start">Before You Start</a>  
 
 * Support Native, Banner, Interstital and Rewarded Video.
-* Support API 14(Android 4.0 or later).
+* Support API 16(Android 4.1 or later).
 * The Mopub account is needed. 
 * Make sure you have correctly integrated Mopub Rewarded Video or Interstitial(Fullscreen) or Banner or Native Mediation into your application.
 * Please make sure you have get your own slot id for test. 
-* [Download the latest Zcoup SDK](https://github.com/zero-sdk/Android_SDK/blob/master/ZcoupSDK.zip)
-* [Download the Zcoup Adapter for Mopub](https://github.com/zero-sdk/Android_SDK/blob/master/ZcoupSDK_Adapter-For-Mopub.zip)
+* [Download the latest Suib SDK](https://github.com/Suib-SDK/Suib-SDK/blob/master/SuibSDK.zip)
+* [Download the Suib Adapter for Mopub](https://github.com/Suib-SDK/Suib-SDK/blob/master/SuibSDK_Adapter-For-Mopub.zip)
 
 ## <a name="Docking">Intergation</a>
 
@@ -18,43 +18,59 @@
 > Log on to the Mopub website:[MoPub Platform](https://app.mopub.com/account/login)
 
 
-### Step 2: Integrate Zcoup SDK
+### Step 2: Integrate Suib SDK
 
-* Detail of Zcoup SDK
+* Detail of Suib SDK
 
     | jar name | jar function |
     | --- | --- |
-    | zcoup_base_xx.jar        | for banner\fullscreem\native ads |
-    | zcoup_video_xx.jar       | RewardedVideo function |
-    | zcoup_imageloader_xx.jar | Imageloader function |
+    | suib_base_xx.jar        | for banner\fullscreem\native ads |
+    | suib_video_xx.jar       | RewardedVideo function |
+    | suib_imageloader_xx.jar | Imageloader function |
 
 * Add the needed jars to your module's libs/
 * Update the module's build.gradle as follows
 
     ```groovy
     dependencies {
-    	   implementation files('libs/zcoup_base_xx.jar')
-    	   implementation files('libs/zcoup_video_xx.jar')
-    	   implementation files('libs/zcoup_imageloader_xx.jar')
+    	   implementation files('libs/suib_base_xx.jar')
+    	   implementation files('libs/suib_video_xx.jar')
+    	   implementation files('libs/suib_imageloader_xx.jar')
     }
     ```
 
 * Update the AndroidManifest.xml
 
     ```xml
-    <!--for non google play Ad-->
-    <activity android:name="suib.base.view.InnerWebViewActivity" />
-    
-    <!--for RewardedVideo-->
-    <activity
-        android:name="suib.video.view.RewardedVideoActivity"
-        android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
-    
-    <!-- for Interstitial -->
-    <activity android:name="suib.base.view.InterstitialActivity" />  
-    
-    ```
+	<!--Necessary Permissions-->
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+  <!--for RewardedVideo-->
+  <activity
+	android:name="com.suib.video.view.RewardedVideoActivity"
+	android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+	
+ <!-- for Interstitial -->
+<activity android:name="com.suib.base.view.InterstitialActivity" /> 
+    	
+	<!-- Necessary -->
+	<activity android:name="com.suib.base.view.InnerWebViewActivity" />
+
+	<provider
+            android:authorities="${applicationId}.xxprovider"
+            android:name="com.suib.base.core.SuibProvider"
+            android:exported="false"/>
+	
+
+	<!--If your targetSdkVersion is 28, you need update <application> as follows:-->
+  	<application
+    	...  	
+        android:usesCleartextTraffic="true"
+        ...>
+        ...
+    </application>
+```
 ### Step 3: Integrate the adapter
 
 * Details of the adapter
@@ -78,7 +94,7 @@
 
     ![image](https://user-images.githubusercontent.com/15087458/50625923-1ed70680-0f66-11e9-81bd-dee2b5abbecd.png)
 
-* Create Zcoup network
+* Create Suib network
     
     ![image](https://user-images.githubusercontent.com/15087458/50625949-5180ff00-0f66-11e9-8ba9-7485c8a426d6.png)
 
@@ -88,10 +104,10 @@
 
 | ad type | full class name |
 | --- | --- |
-| Banner ad unit     | suib.mediation.mopub.CTAdapterBanner |
-| FullScreen ad unit | suib.mediation.mopub.CTAdapterFullScreen |
-| Native ad unit     | suib.mediation.mopub.CTAdapterNative |
-| RewardedVideo ad unit | suib.mediation.mopub.CTAdapterRewardVideo |
+| Banner ad unit     | com.suib.mediation.mopub.ZCAdapterBanner |
+| FullScreen ad unit | com.suib.mediation.mopub.ZCAdapterInterstitial |
+| Native ad unit     | com.suib.mediation.mopub.ZCAdapterNative |
+| RewardedVideo ad unit | com.suib.mediation.mopub.ZCAdapterRewardedVideo |
 
 > For each unit, add a JSON object:  **{"CT_SLOTID":"your slotID"}**
   

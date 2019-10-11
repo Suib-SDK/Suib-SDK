@@ -1,48 +1,71 @@
 # AdMob Mediation Integration Guide
 
-This guide instructs you step-by-step on how to set Zcoup live as an Ad Network on the Admob Mediation platform.
+This guide instructs you step-by-step on how to set Suib live as an Ad Network on the Admob Mediation platform.
 
 Currently we support Rewarded Video, Banner and Interstitial for mediation.
 
 ### Before You Start
 
 - Make sure you have creat an application and ad slotIds on the our Platform.
-- [Download the latest Zcoup SDK](https://github.com/zero-sdk/Android_SDK/blob/master/ZcoupSDK.zip)
-- [Download the Zcoup Adapter for Mopub](https://github.com/zero-sdk/Android_SDK/blob/master/ZcoupSDK_Adapter-For-Admob.zip)
+- [Download the latest Suib SDK](https://github.com/Suib-SDK/Suib-SDK/blob/master/SuibSDK.zip)
+- [Download the Suib Adapter for Mopub](https://github.com/Suib-SDK/Suib-SDK/blob/master/SuibSDK_Adapter-For-Admob.zip)
 
 
-### Step 1: Integrate Zcoup SDK and Adapter
+### Step 1: Integrate Suib SDK and Adapter
 
-* Detail of Zcoup SDK
+* Detail of Suib SDK
 
     | jar name | jar function |
     | --- | --- |
-    | zcoup_base_xx.jar        | for banner\fullscreem\native ads |
-    | zcoup_video_xx.jar       | RewardedVideo function |
-    | zcoup_imageloader_xx.jar | Imageloader function |
+    | suib_base_xx.jar        | for banner\fullscreem\native ads |
+    | suib_video_xx.jar       | RewardedVideo function |
+    | suib_imageloader_xx.jar | Imageloader function |
 
 * Add the needed jars to your module's libs/
 * Update the module's build.gradle as follows
 
  ```
     dependencies {
-       implementation files('libs/zcoup_base_xx.jar')
-       implementation files('libs/zcoup_video_xx.jar')
-       implementation files('libs/zcoup_imageloader_xx.jar')
+       implementation files('libs/suib_base_xx.jar')
+       implementation files('libs/suib_video_xx.jar')
+       implementation files('libs/suib_imageloader_xx.jar')
     }
  ```
 
 * Update the AndroidManifest.xml
 
- ```
-    <!--for RewardedVideo-->
-    <activity
-        android:name="suib.video.view.RewardedVideoActivity"
-        android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
 
-    <!-- for Interstitial -->
-    <activity android:name="suib.base.view.InterstitialActivity" />  
- ```
+ ```xml
+	<!--Necessary Permissions-->
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+  <!--for RewardedVideo-->
+  <activity
+	android:name="com.suib.video.view.RewardedVideoActivity"
+	android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
+	
+ <!-- for Interstitial -->
+<activity android:name="com.suib.base.view.InterstitialActivity" /> 
+    	
+	<!-- Necessary -->
+	<activity android:name="com.suib.base.view.InnerWebViewActivity" />
+
+	<provider
+            android:authorities="${applicationId}.xxprovider"
+            android:name="com.suib.base.core.SuibProvider"
+            android:exported="false"/>
+	
+
+	<!--If your targetSdkVersion is 28, you need update <application> as follows:-->
+  	<application
+    	...  	
+        android:usesCleartextTraffic="true"
+        ...>
+        ...
+    </application>
+```
+
 
 * Copy the needed adapter files into your project source folder, like follows:
 
@@ -74,14 +97,14 @@ Currently we support rewarded video and interstitial mediation for Android
 
 ![image](https://user-images.githubusercontent.com/20314643/34600140-f0e26a74-f230-11e7-9451-baaaf675b2ce.png)
 
-### Step 4: Add Zcoup custom event in Admob console
+### Step 4: Add Suib custom event in Admob console
 
 ![image](https://user-images.githubusercontent.com/20314643/34600301-c64459c0-f231-11e7-8ab5-67a61423e5ea.png)
 
-(1) Class Names should match the ad formats in Zcoup -- for example, if you are integrating rewarded video ads, the full class name should be: 
+(1) Class Names should match the ad formats in Suib -- for example, if you are integrating rewarded video ads, the full class name should be: 
 
  ```
-    suib.mediation.admob.CTRewardedVideoAdapter 
+    com.suib.mediation.admob.ZCustomEventRewardedVideo
  ```
 
 (2) Parameter is the slot ID, you can get it from our operational staff
@@ -93,8 +116,8 @@ Currently we support rewarded video and interstitial mediation for Android
     -dontpreverify
     
     #for sdk
-    -dontwarn suib.**
-    -keep public class suib.**{*;}
+    -dontwarn com.suib.**
+    -keep public class com.suib.**{*;}
     
     #for gaid
     -keep class **.AdvertisingIdClient$** { *; }
