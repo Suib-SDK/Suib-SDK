@@ -102,6 +102,7 @@
 ```
 
 **Set schema https**
+
 ```java
     SuibSDK.setSchema(true);
 ```
@@ -275,41 +276,74 @@ public class MyCTAdEventListener extends CTAdEventListener {
 
 ```java
     /**
-     * @param slotId     suib id
-     * @param context    context
-     * @param adListener callback listener 
+     * Save the adID for getting ad from cache. 
+     * @param slotId suib Id
+     * @param context  context
+     * @return adId
      */
-    SuibSDK.getNativeAdForCache("Your slotID",context,new MyCTAdEventListener() {
-        @Override
-        public void onReceiveAdVoSucceed(AdsNativeVO result) {
-            if (result == null) {
-                return;
-            }
-            ZCLog.e("onReceiveAdVoSucceed");
-            AdHolder.adNativeVO = result;
-            super.onReceiveAdVoSucceed(result);
-        }
-    });
-
+    int adid = SuibSDK.preloadNativeAd(Config.slotIdNative, getContext());
 ```
 
 > Show ad from cache
 
 ```java
-      ZCAdvanceNative zcAdvanceNative = new ZCAdvanceNative(getContext());
-      AdsNativeVO nativeVO = AdHolder.adNativeVO;
-
-	  if (nativeVO != null) {
-            zcAdvanceNative.setNativeVO(nativeVO);
-            zcAdvanceNative.setSecondAdEventListener(new MyCTAdEventListener() {
+    /**
+     * @param adId ID of the request cache advertisement
+     * @param adListener callback listener
+     */
+    SuibSDK.getNativeAdForCache(adid, new MyCTAdEventListener() {
+        @Override
+        public void onReceiveAdSucceed(ZCNative result) {
+            if (result == null) return;
+            ZCAdvanceNative ctAdvanceNative = (ZCAdvanceNative) result;
+            ctAdvanceNative.setSecondAdEventListener(new MyCTAdEventListener() {
+    
                 @Override
                 public void onAdClicked(com.suib.base.core.ZCNative result) {
-                    ZCLog.e("onAdClicked");
+                    Log.e(TAG,"onAdClicked");
                     super.onAdClicked(result);
                 }
             });
-            showAd(zcAdvanceNative);
-       }
+    
+            showAd(ctAdvanceNative);
+    
+        }
+    });
+    
+    private void showAd(ZCAdvanceNative zcAdvanceNative) {
+        ImageView img = (ImageView) adLayout.findViewById(R.id.iv_img);
+        ImageView icon = (ImageView) adLayout.findViewById(R.id.iv_icon);
+        TextView title = (TextView)adLayout.findViewById(R.id.tv_title);
+        TextView desc = (TextView)adLayout.findViewById(R.id.tv_desc);
+        Button click = (Button)adLayout.findViewById(R.id.bt_click);
+        ImageView adChoice = (ImageView)adLayout.findViewById(R.id.choice_icon);
+        
+        //show the image and icon yourself 
+        if (ctAdvanceNative.getImage() == null) {
+            //if no cache, get image from url
+            img.setImageURI(Uri.parse(ctAdvanceNative.getImageUrl()));
+        } else {
+            //loaded from cache
+            img.setImageBitmap(ctAdvanceNative.getImage());
+        }
+        if (ctAdvanceNative.getIcon() == null) {
+            //if no cache, get image from url
+            icon.setImageURI(Uri.parse(ctAdvanceNative.getIconUrl()));
+        } else {
+            //loaded from cache
+            icon.setImageBitmap(ctAdvanceNative.icon);
+        }
+        title.setText(zcAdvanceNative.getTitle());
+        desc.setText(zcAdvanceNative.getDesc());
+        click.setText(zcAdvanceNative.getButtonStr());
+        adChoice.setImageURI(zcAdvanceNative.getAdChoiceIconUrl());
+        //offerType（1 : download ads; 2 : content ads）
+        int offerType = zcAdvanceNative.getOfferType();  
+         
+        zcAdvanceNative.registeADClickArea(adLayout);
+        container.addView(adLayout);
+   }
+
 ```
 
 
