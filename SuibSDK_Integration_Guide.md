@@ -245,7 +245,7 @@ public class MyCTAdEventListener extends CTAdEventListener {
 * Show the Native ad
 
 ``` java
-   private void showAd(ZCAdvanceNative zcAdvanceNative) {
+    private void showAd(ZCAdvanceNative zcAdvanceNative) {
         ImageView img = (ImageView) adLayout.findViewById(R.id.iv_img);
         ImageView icon = (ImageView) adLayout.findViewById(R.id.iv_icon);
         TextView title = (TextView)adLayout.findViewById(R.id.tv_title);
@@ -254,8 +254,22 @@ public class MyCTAdEventListener extends CTAdEventListener {
         ImageView adChoice = (ImageView)adLayout.findViewById(R.id.choice_icon);
         
         //show the image and icon yourself 
-        String imageUrl = zcAdvanceNative.getImageUrl();
-        String iconUrl = zcAdvanceNative.getIconUrl();          
+        if (ctAdvanceNative.getImageFile() == null) {
+            //if no cache, get image from url
+            img.setImageURI(Uri.parse(ctAdvanceNative.getImageUrl()));
+        } else {
+            //loaded from cache
+            img.setImageURI(Uri.fromFile(ctAdvanceNative.getImageFile()));
+        }
+
+        if (ctAdvanceNative.getIconFile() == null) {
+            //if no cache, get image from url
+            icon.setImageURI(Uri.parse(ctAdvanceNative.getIconUrl()));
+        } else {
+            //loaded from cache
+            icon.setImageURI(Uri.fromFile(ctAdvanceNative.getIconFile()));
+        }
+        
         title.setText(zcAdvanceNative.getTitle());
         desc.setText(zcAdvanceNative.getDesc());
         click.setText(zcAdvanceNative.getButtonStr());
@@ -276,73 +290,31 @@ public class MyCTAdEventListener extends CTAdEventListener {
 
 ```java
     /**
-     * Save the adID for getting ad from cache. 
-     * @param slotId suib Id
-     * @param context  context
-     * @return adId
+     * @param slotId  slotId
+     * @param context context
+     * @return true for preload success,false means failure
      */
-    int adid = SuibSDK.preloadNativeAd(Config.slotIdNative, getContext());
+    SuibSDK.preloadNativeAd("Your slotID", getContext());
 ```
 
 > Show ad from cache
 
 ```java
     /**
-     * @param adId ID of the request cache advertisement
+     * @param slotId  slotId
      * @param adListener callback listener
      */
-    SuibSDK.getNativeAdForCache(adid, new MyCTAdEventListener() {
+    SuibSDK.getNativeAdForCache("Your slotID", new MyCTAdEventListener() {
         @Override
         public void onReceiveAdSucceed(ZCNative result) {
             if (result == null) return;
-            ZCAdvanceNative ctAdvanceNative = (ZCAdvanceNative) result;
-            ctAdvanceNative.setSecondAdEventListener(new MyCTAdEventListener() {
-    
-                @Override
-                public void onAdClicked(com.suib.base.core.ZCNative result) {
-                    Log.e(TAG,"onAdClicked");
-                    super.onAdClicked(result);
-                }
-            });
-    
+            
+            ZCAdvanceNative ctAdvanceNative = (ZCAdvanceNative) result;    
             showAd(ctAdvanceNative);
     
         }
     });
     
-    private void showAd(ZCAdvanceNative zcAdvanceNative) {
-        ImageView img = (ImageView) adLayout.findViewById(R.id.iv_img);
-        ImageView icon = (ImageView) adLayout.findViewById(R.id.iv_icon);
-        TextView title = (TextView)adLayout.findViewById(R.id.tv_title);
-        TextView desc = (TextView)adLayout.findViewById(R.id.tv_desc);
-        Button click = (Button)adLayout.findViewById(R.id.bt_click);
-        ImageView adChoice = (ImageView)adLayout.findViewById(R.id.choice_icon);
-        
-        //show the image and icon yourself 
-        if (ctAdvanceNative.getImage() == null) {
-            //if no cache, get image from url
-            img.setImageURI(Uri.parse(ctAdvanceNative.getImageUrl()));
-        } else {
-            //loaded from cache
-            img.setImageBitmap(ctAdvanceNative.getImage());
-        }
-        if (ctAdvanceNative.getIcon() == null) {
-            //if no cache, get image from url
-            icon.setImageURI(Uri.parse(ctAdvanceNative.getIconUrl()));
-        } else {
-            //loaded from cache
-            icon.setImageBitmap(ctAdvanceNative.icon);
-        }
-        title.setText(zcAdvanceNative.getTitle());
-        desc.setText(zcAdvanceNative.getDesc());
-        click.setText(zcAdvanceNative.getButtonStr());
-        adChoice.setImageURI(zcAdvanceNative.getAdChoiceIconUrl());
-        //offerType（1 : download ads; 2 : content ads）
-        int offerType = zcAdvanceNative.getOfferType();  
-         
-        zcAdvanceNative.registeADClickArea(adLayout);
-        container.addView(adLayout);
-   }
 
 ```
 
