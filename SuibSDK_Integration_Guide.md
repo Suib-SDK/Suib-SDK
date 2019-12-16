@@ -100,6 +100,18 @@
 ```java
     SuibSDK.initialize(context, "Your slotID");
 ```
+or
+
+```java
+     /**
+     * @param context context
+     * @param slotId slotId
+     * @param isRepPhoneInfo Whether to report telephone information data, 
+     * such as MCC code, MNC code, carrier name, SIM card country code. 
+     * We recommend that you report this information to help us optimize our advertising.
+     */
+    SuibSDK.initialize(context, "Your slotID",true);
+```
 
 **Set schema https**
 
